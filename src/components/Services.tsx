@@ -2,64 +2,19 @@ import React from 'react';
 import { Sparkles, Heart, Gift, Palette, ArrowUpRight } from 'lucide-react';
 import { SectionTitle } from './SectionTitle';
 import { RevealAnimation } from './RevealAnimation';
+import { useAdminContext } from '../context/AdminContext';
 
-interface ServiceItem {
-  num: string;
-  title: string;
-  desc: string;
-  icon: React.ComponentType<{ className?: string }>;
-  bgColor: string;
-  textColor: string;
-  borderColor?: string;
-  hasDarkBg?: boolean;
-}
-
-const servicesData: ServiceItem[] = [
-  {
-    num: '01 / HULE',
-    title: 'Cumples que hacen ¡wow!',
-    desc: 'Arcos, guirnaldas y rincones para soplar las velitas con estilo.',
-    icon: Sparkles,
-    bgColor: 'bg-[#DA90AE]', // Soft pink
-    textColor: 'text-[#4B2032]',
-  },
-  {
-    num: '02 / HULE',
-    title: 'Baby showers',
-    desc: 'Bienvenida suave, dulce y muy especial.',
-    icon: Heart,
-    bgColor: 'bg-[#F5F0B8]', // Yellow pastel
-    textColor: 'text-[#4B2032]',
-  },
-  {
-    num: '03 / HULE',
-    title: 'Momentos para brindar',
-    desc: 'Aniversarios, recibidas y todo lo que merece un brindis.',
-    icon: Sparkles,
-    bgColor: 'bg-[#E8A27F]', // Peach
-    textColor: 'text-[#4B2032]',
-  },
-  {
-    num: '04 / HULE',
-    title: 'Kits de cumpleaños',
-    desc: 'Kits listos con todo lo necesario para celebrar y decorar vos en casa.',
-    icon: Gift,
-    bgColor: 'bg-[#945B72]', // Plum
-    textColor: 'text-[#FFFDF8]',
-    hasDarkBg: true,
-  },
-  {
-    num: '05 / HULE',
-    title: 'Candy bar',
-    desc: 'La mesa más fotografiada de la fiesta: rica, ordenada y llena de color.',
-    icon: Palette,
-    bgColor: 'bg-[#FFFDF8]', // Warm white
-    textColor: 'text-[#4B2032]',
-    borderColor: 'border-[#4B2032]/10',
-  },
-];
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Sparkles,
+  Heart,
+  Gift,
+  Palette,
+};
 
 export const Services: React.FC = () => {
+  const { siteContent } = useAdminContext();
+  const servicesData = siteContent.services;
+
   return (
     <section id="servicios" className="px-6 md:px-12 py-20 bg-[#F8F2E8] relative z-20">
       <div className="max-w-7xl mx-auto">
@@ -78,7 +33,7 @@ export const Services: React.FC = () => {
         {/* Services Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-8">
           {servicesData.map((service, index) => {
-            const IconComponent = service.icon;
+            const IconComponent = iconMap[service.iconName] || Sparkles;
             
             // Asymmetrical grid column shifts on desktop
             let offsetClass = '';

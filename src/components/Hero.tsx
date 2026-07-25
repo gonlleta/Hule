@@ -2,8 +2,12 @@ import React from 'react';
 import { MapPin, Star } from 'lucide-react';
 import { RevealAnimation } from './RevealAnimation';
 import BalloonArtwork from './BalloonArtwork';
+import { useAdminContext } from '../context/AdminContext';
 
 export const Hero: React.FC = () => {
+  const { siteContent } = useAdminContext();
+  const { hero } = siteContent;
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -29,29 +33,29 @@ export const Hero: React.FC = () => {
           {/* Top Label */}
           <RevealAnimation variant="fade-up" delay={0.1}>
             <span className="font-mono text-xs tracking-[0.25em] text-[#945B72] font-bold uppercase mb-4 block">
-              — Dónde cada detalle importa
+              {hero.topLabel}
             </span>
           </RevealAnimation>
 
           {/* Hero Headline */}
           <RevealAnimation variant="fade-up" delay={0.25}>
             <h1 className="font-serif-tight text-[3.2rem] sm:text-[4.5rem] lg:text-[5.5rem] leading-[1.02] tracking-tight text-[#4B2032] mb-6 font-bold">
-              Hacemos que tu<br />
+              {hero.headlinePart1}<br />
               <span className="text-[#CB4178] relative inline-block">
-                fiesta
+                {hero.headlineHighlight}
                 {/* Underline ornament SVG */}
                 <svg className="absolute left-0 bottom-[-4px] w-full h-[6px]" viewBox="0 0 100 10" preserveAspectRatio="none">
                   <path d="M0,7 C30,2 70,2 100,7" stroke="#CB4178" strokeWidth="2.5" fill="none" strokeLinecap="round" />
                 </svg>
-              </span> sea<br />
-              tan única como vos.
+              </span><br />
+              {hero.headlinePart2}
             </h1>
           </RevealAnimation>
 
           {/* Subtext description */}
           <RevealAnimation variant="fade-up" delay={0.4}>
             <p className="font-sans text-[#945B72] text-lg md:text-xl max-w-lg leading-relaxed mb-8">
-              Globos, color y detalles para celebrar eso que no querés que pase desapercibido.
+              {hero.subtext}
             </p>
           </RevealAnimation>
 

@@ -8,43 +8,50 @@ import Process from './components/Process';
 import ContactSection from './components/ContactSection';
 import Footer from './components/Footer';
 import FloatingCTA from './components/FloatingCTA';
+import AdminModal from './components/AdminModal';
+import { AdminProvider } from './context/AdminContext';
 
 function App() {
   return (
-    <div className="min-h-screen bg-[#F8F2E8] text-[#4B2032] overflow-x-hidden relative paper-grain selection:bg-[#CB4178]/25 selection:text-[#4B2032]">
-      {/* Sticky Header Navigation */}
-      <Header />
+    <AdminProvider>
+      <div className="min-h-screen bg-[#F8F2E8] text-[#4B2032] overflow-x-hidden relative paper-grain selection:bg-[#CB4178]/25 selection:text-[#4B2032]">
+        {/* Sticky Header Navigation */}
+        <Header />
 
-      {/* Main Page Layout Sections */}
-      <main>
-        {/* Hero Section + Balloon Illustration */}
-        <Hero />
+        {/* Main Page Layout Sections */}
+        <main>
+          {/* Hero Section + Balloon Illustration */}
+          <Hero />
 
-        {/* Brand Value Propositions / Benefits Grid */}
-        <Benefits />
+          {/* Brand Value Propositions / Benefits Grid */}
+          <Benefits />
 
-        {/* What We Do - Card Grid */}
-        <Services />
+          {/* What We Do - Card Grid */}
+          <Services />
 
-        {/* Big Editorial Plum/Pink Statement */}
-        <Manifesto />
+          {/* Big Editorial Plum/Pink Statement */}
+          <Manifesto />
 
-        {/* Visual Gallery */}
-        <InspirationGallery />
+          {/* Visual Gallery */}
+          <InspirationGallery />
 
-        {/* Work Step Process */}
-        <Process />
+          {/* Work Step Process */}
+          <Process />
 
-        {/* Double-column Form and Social Media area */}
-        <ContactSection />
-      </main>
+          {/* Double-column Form and Social Media area */}
+          <ContactSection />
+        </main>
 
-      {/* Full layered Footer & Pre-Footer */}
-      <Footer />
+        {/* Full layered Footer & Pre-Footer */}
+        <Footer />
 
-      {/* Bottom Floating CTA Bar (Mobile) / Button (Desktop) */}
-      <FloatingCTA />
-    </div>
+        {/* Bottom Floating CTA Bar (Mobile) / Button (Desktop) */}
+        <FloatingCTA />
+
+        {/* Admin Panel Modal */}
+        <AdminModal />
+      </div>
+    </AdminProvider>
   );
 }
 

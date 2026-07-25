@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, User } from 'lucide-react';
 import MobileMenu from './MobileMenu';
+import { useAdminContext } from '../context/AdminContext';
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAdminLoggedIn, adminUser, setIsAdminModalOpen } = useAdminContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,8 +49,21 @@ export const Header: React.FC = () => {
           <a href="#contacto" className="text-sm font-medium text-[#4B2032] hover:text-[#CB4178] transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-[#CB4178] hover:after:w-full after:transition-all after:duration-300">Contacto</a>
         </nav>
 
-        {/* Desktop Action Button */}
-        <div className="hidden md:flex items-center">
+        {/* Desktop Action Buttons */}
+        <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={() => setIsAdminModalOpen(true)}
+            className={`px-3 py-2 rounded-full text-xs font-mono font-semibold flex items-center gap-1.5 transition-all shadow-sm ${
+              isAdminLoggedIn
+                ? 'bg-[#CB4178] text-white hover:bg-[#4B2032]'
+                : 'bg-[#4B2032]/10 text-[#4B2032] hover:bg-[#4B2032]/20'
+            }`}
+            title="Panel de Administrador"
+          >
+            <User className="w-3.5 h-3.5" />
+            <span>{isAdminLoggedIn ? adminUser?.name : 'Admin'}</span>
+          </button>
+
           <a
             href="#contacto"
             className="px-5 py-2.5 bg-[#4B2032] hover:bg-[#CB4178] text-[#FFFDF8] rounded-full text-xs font-semibold tracking-wider font-mono uppercase shadow-sm transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#CB4178]/50"
