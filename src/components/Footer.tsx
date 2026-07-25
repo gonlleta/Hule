@@ -151,11 +151,11 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="mailto:hola@hule.studio"
+                  href="mailto:studiohule@gmail.com"
                   className="flex items-center gap-2 text-white/70 hover:text-[#DA90AE] transition-colors"
                 >
                   <Mail className="w-4 h-4 text-[#DA90AE]" />
-                  <span>hola@hule.studio</span>
+                  <span>studiohule@gmail.com</span>
                 </a>
               </li>
             </ul>

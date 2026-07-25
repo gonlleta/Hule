@@ -37,36 +37,31 @@ export const ContactForm: React.FC = () => {
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setIsSubmitting(true);
     
-    // Simulate API connection delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    console.log('Form data sent:', data);
-    
-    /* 
-      --- PREPARATION FOR EXTERNAL INTEGRATION ---
-      
-      Option 1: Formspree (HTML POST or Fetch)
-      -----------------------------------------
-      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+    try {
+      await fetch('https://formsubmit.co/ajax/studiohule@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          _subject: `Nueva Consulta Web Hule - ${data.name}`,
+          Nombre: data.name,
+          Email: data.email,
+          'Tipo de Evento': data.eventType,
+          'Fecha Estimada': data.estimatedDate,
+          'Cantidad de Invitados': data.guestCount || 'No especificado',
+          'Idea del Evento': data.eventIdea || 'No especificado',
+          'Detalles Adicionales': data.additionalDetails || 'No especificado',
+        }),
       });
-      
-      Option 2: EmailJS
-      -----------------------------------------
-      import emailjs from '@emailjs/browser';
-      await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', data, 'YOUR_PUBLIC_KEY');
-      
-      Option 3: Supabase
-      -----------------------------------------
-      import { supabase } from './supabaseClient';
-      const { error } = await supabase.from('inquiries').insert([data]);
-    */
-
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    reset();
+    } catch (err) {
+      console.error('Form submission error:', err);
+    } finally {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      reset();
+    }
   };
 
   if (isSubmitted) {

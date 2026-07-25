@@ -8,7 +8,7 @@ export const AdminModal: React.FC = () => {
     isAdminLoggedIn,
     isAdminModalOpen,
     setIsAdminModalOpen,
-    registerAdmin,
+    authenticateAdmin,
     logoutAdmin,
     siteContent,
     updateHeroText,
@@ -19,9 +19,10 @@ export const AdminModal: React.FC = () => {
     resetSiteContent,
   } = useAdminContext();
 
-  const [activeTab, setActiveTab] = useState<'account' | 'gallery' | 'services' | 'hero'>('gallery');
-  const [regName, setRegName] = useState('');
-  const [regUsername, setRegUsername] = useState('');
+  const [activeTab, setActiveTab] = useState<'account' | 'gallery' | 'services' | 'hero'>('account');
+  const [loginUser, setLoginUser] = useState('GIULIAHILT');
+  const [loginPass, setLoginPass] = useState('GIULIA2017');
+  const [authError, setAuthError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
   // New gallery item local state
@@ -36,13 +37,15 @@ export const AdminModal: React.FC = () => {
     setTimeout(() => setSuccessMsg(''), 3000);
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (regName.trim() && regUsername.trim()) {
-      registerAdmin(regName.trim(), regUsername.trim());
-      setRegName('');
-      setRegUsername('');
-      showNotification('¡Cuenta de Administrador activada con éxito!');
+    setAuthError('');
+    const success = authenticateAdmin(loginUser, loginPass);
+    if (success) {
+      showNotification('¡Sesión iniciada correctamente como Giulia Hilt!');
+      setActiveTab('gallery');
+    } else {
+      setAuthError('Usuario o contraseña incorrectos');
     }
   };
 
@@ -435,8 +438,8 @@ export const AdminModal: React.FC = () => {
           {activeTab === 'account' && (
             <div className="space-y-6">
               <div>
-                <h4 className="font-serif text-2xl text-[#4B2032] font-semibold mb-1">Cuenta de Administrador</h4>
-                <p className="text-sm text-[#945B72]">Registra o modifica tu nombre de usuario para el panel.</p>
+                <h4 className="font-serif text-2xl text-[#4B2032] font-semibold mb-1">Acceso de Administrador</h4>
+                <p className="text-sm text-[#945B72]">Ingresa con tus credenciales de administrador para gestionar el sitio.</p>
               </div>
 
               {isAdminLoggedIn ? (
@@ -447,7 +450,7 @@ export const AdminModal: React.FC = () => {
                     </div>
                     <div>
                       <h5 className="font-serif text-xl font-bold text-[#4B2032]">{adminUser?.name}</h5>
-                      <p className="font-mono text-sm text-[#945B72]">Usuario: @{adminUser?.username}</p>
+                      <p className="font-mono text-sm text-[#945B72]">Usuario Administrador: @{adminUser?.username}</p>
                     </div>
                   </div>
 
@@ -473,29 +476,35 @@ export const AdminModal: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="bg-white border border-[#4B2032]/10 rounded-2xl p-6 space-y-4 shadow-sm">
-                  <h5 className="font-serif text-lg font-semibold text-[#4B2032]">Registrar Cuenta de Administrador</h5>
+                <div className="bg-white border border-[#4B2032]/10 rounded-2xl p-6 space-y-4 shadow-sm max-w-md mx-auto">
+                  <h5 className="font-serif text-xl font-semibold text-[#4B2032] text-center">Iniciar Sesión como Admin</h5>
                   
-                  <form onSubmit={handleRegister} className="space-y-4">
+                  {authError && (
+                    <div className="bg-red-100 border border-red-200 text-red-700 px-4 py-2 rounded-xl text-xs font-mono font-semibold">
+                      {authError}
+                    </div>
+                  )}
+
+                  <form onSubmit={handleLoginSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-xs font-mono uppercase text-[#945B72] font-bold mb-1">Nombre Completo</label>
+                      <label className="block text-xs font-mono uppercase text-[#945B72] font-bold mb-1">Usuario</label>
                       <input
                         type="text"
-                        placeholder="Ej: Gonzalo"
-                        value={regName}
-                        onChange={(e) => setRegName(e.target.value)}
-                        className="w-full px-4 py-2.5 bg-[#F8F2E8] border border-[#4B2032]/15 rounded-xl text-sm text-[#4B2032]"
+                        placeholder="GIULIAHILT"
+                        value={loginUser}
+                        onChange={(e) => setLoginUser(e.target.value)}
+                        className="w-full px-4 py-2.5 bg-[#F8F2E8] border border-[#4B2032]/15 rounded-xl text-sm font-mono text-[#4B2032]"
                         required
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-mono uppercase text-[#945B72] font-bold mb-1">Nombre de Usuario (Admin)</label>
+                      <label className="block text-xs font-mono uppercase text-[#945B72] font-bold mb-1">Contraseña</label>
                       <input
-                        type="text"
-                        placeholder="Ej: gonza_admin"
-                        value={regUsername}
-                        onChange={(e) => setRegUsername(e.target.value)}
+                        type="password"
+                        placeholder="GIULIA2017"
+                        value={loginPass}
+                        onChange={(e) => setLoginPass(e.target.value)}
                         className="w-full px-4 py-2.5 bg-[#F8F2E8] border border-[#4B2032]/15 rounded-xl text-sm font-mono text-[#4B2032]"
                         required
                       />
@@ -505,7 +514,7 @@ export const AdminModal: React.FC = () => {
                       type="submit"
                       className="w-full py-3 bg-[#CB4178] hover:bg-[#4B2032] text-white rounded-xl text-xs font-mono font-bold uppercase tracking-wider shadow transition-colors"
                     >
-                      Guardar y Activar Administrador
+                      Ingresar al Panel
                     </button>
                   </form>
                 </div>

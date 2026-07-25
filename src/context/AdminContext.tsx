@@ -104,6 +104,7 @@ interface AdminContextType {
   isAdminLoggedIn: boolean;
   isAdminModalOpen: boolean;
   setIsAdminModalOpen: (open: boolean) => void;
+  authenticateAdmin: (username: string, pass: string) => boolean;
   loginAdmin: (user: AdminUser) => void;
   registerAdmin: (name: string, username: string) => void;
   logoutAdmin: () => void;
@@ -142,6 +143,15 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_CONTENT, JSON.stringify(siteContent));
   }, [siteContent]);
+
+  const authenticateAdmin = (username: string, pass: string): boolean => {
+    if (username.trim().toUpperCase() === 'GIULIAHILT' && pass.trim() === 'GIULIA2017') {
+      const user: AdminUser = { name: 'Giulia Hilt', username: 'GIULIAHILT' };
+      setAdminUser(user);
+      return true;
+    }
+    return false;
+  };
 
   const loginAdmin = (user: AdminUser) => {
     setAdminUser(user);
@@ -204,6 +214,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         isAdminLoggedIn: !!adminUser,
         isAdminModalOpen,
         setIsAdminModalOpen,
+        authenticateAdmin,
         loginAdmin,
         registerAdmin,
         logoutAdmin,
