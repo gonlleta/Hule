@@ -68,9 +68,8 @@ export const Services: React.FC = () => {
           label="LO QUE HACEMOS"
           title={
             <>
-              Una fiesta con<br />
-              <span className="text-[#CB4178] italic">personalidad</span><br />
-              propia.
+              Fiestas con<br />
+              <span className="text-[#CB4178] italic">personalidad</span>
             </>
           }
           subtitle="Armamos una propuesta visual completa para que vos solo te ocupes de disfrutar y recibir a tu gente."

@@ -139,8 +139,7 @@ export const BalloonArtwork: React.FC = () => {
           <span className="font-serif text-[#4B2032] text-xl font-normal leading-[1.1] mb-4 block">
             Hecho<br />
             para<br />
-            tu<br />
-            momento
+            celebrar
           </span>
           
           {/* Divider */}
