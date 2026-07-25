@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Heart, Zap, Palette, ArrowUpRight } from 'lucide-react';
+import { Sparkles, Heart, Gift, Palette, ArrowUpRight } from 'lucide-react';
 import { SectionTitle } from './SectionTitle';
 import { RevealAnimation } from './RevealAnimation';
 
@@ -41,9 +41,9 @@ const servicesData: ServiceItem[] = [
   },
   {
     num: '04 / HULE',
-    title: 'Marcas que celebran',
-    desc: 'Activaciones, lanzamientos y encuentros que hablan el idioma de tu equipo.',
-    icon: Zap,
+    title: 'Kits de cumpleaños',
+    desc: 'Kits listos con todo lo necesario para celebrar y decorar vos en casa.',
+    icon: Gift,
     bgColor: 'bg-[#945B72]', // Plum
     textColor: 'text-[#FFFDF8]',
     hasDarkBg: true,
