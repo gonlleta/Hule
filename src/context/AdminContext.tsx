@@ -103,6 +103,7 @@ interface AdminContextType {
   adminUser: AdminUser | null;
   isAdminLoggedIn: boolean;
   isAdminModalOpen: boolean;
+  isAdminUrlMode: boolean;
   setIsAdminModalOpen: (open: boolean) => void;
   authenticateAdmin: (username: string, pass: string) => boolean;
   loginAdmin: (user: AdminUser) => void;
@@ -126,11 +127,35 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   });
 
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [isAdminUrlMode, setIsAdminUrlMode] = useState(false);
 
   const [siteContent, setSiteContent] = useState<SiteContent>(() => {
     const saved = localStorage.getItem(STORAGE_KEY_CONTENT);
     return saved ? JSON.parse(saved) : defaultSiteContent;
   });
+
+  useEffect(() => {
+    const checkAdminRoute = () => {
+      const isRoute =
+        window.location.hash === '#admin' ||
+        window.location.hash === '#/admin' ||
+        window.location.pathname.endsWith('/admin') ||
+        window.location.search.includes('admin=true');
+      
+      setIsAdminUrlMode(isRoute);
+      if (isRoute) {
+        setIsAdminModalOpen(true);
+      }
+    };
+
+    checkAdminRoute();
+    window.addEventListener('hashchange', checkAdminRoute);
+    window.addEventListener('popstate', checkAdminRoute);
+    return () => {
+      window.removeEventListener('hashchange', checkAdminRoute);
+      window.removeEventListener('popstate', checkAdminRoute);
+    };
+  }, []);
 
   useEffect(() => {
     if (adminUser) {
@@ -213,6 +238,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         adminUser,
         isAdminLoggedIn: !!adminUser,
         isAdminModalOpen,
+        isAdminUrlMode,
         setIsAdminModalOpen,
         authenticateAdmin,
         loginAdmin,

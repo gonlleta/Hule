@@ -6,7 +6,7 @@ import { useAdminContext } from '../context/AdminContext';
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAdminLoggedIn, adminUser, setIsAdminModalOpen } = useAdminContext();
+  const { isAdminLoggedIn, adminUser, isAdminUrlMode, setIsAdminModalOpen } = useAdminContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,18 +51,20 @@ export const Header: React.FC = () => {
 
         {/* Desktop Action Buttons */}
         <div className="hidden md:flex items-center gap-3">
-          <button
-            onClick={() => setIsAdminModalOpen(true)}
-            className={`px-3 py-2 rounded-full text-xs font-mono font-semibold flex items-center gap-1.5 transition-all shadow-sm ${
-              isAdminLoggedIn
-                ? 'bg-[#CB4178] text-white hover:bg-[#4B2032]'
-                : 'bg-[#4B2032]/10 text-[#4B2032] hover:bg-[#4B2032]/20'
-            }`}
-            title="Panel de Administrador"
-          >
-            <User className="w-3.5 h-3.5" />
-            <span>{isAdminLoggedIn ? adminUser?.name : 'Admin'}</span>
-          </button>
+          {(isAdminLoggedIn || isAdminUrlMode) && (
+            <button
+              onClick={() => setIsAdminModalOpen(true)}
+              className={`px-3 py-2 rounded-full text-xs font-mono font-semibold flex items-center gap-1.5 transition-all shadow-sm ${
+                isAdminLoggedIn
+                  ? 'bg-[#CB4178] text-white hover:bg-[#4B2032]'
+                  : 'bg-[#4B2032]/10 text-[#4B2032] hover:bg-[#4B2032]/20'
+              }`}
+              title="Panel de Administrador"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>{isAdminLoggedIn ? adminUser?.name : 'Admin'}</span>
+            </button>
+          )}
 
           <a
             href="#contacto"
