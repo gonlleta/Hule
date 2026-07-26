@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, Heart } from 'lucide-react';
+import { Mail, Heart } from 'lucide-react';
 import { RevealAnimation } from './RevealAnimation';
 
 export const Footer: React.FC = () => {
@@ -136,17 +136,6 @@ export const Footer: React.FC = () => {
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                   </svg>
                   <span>Instagram</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://wa.me/5493489000000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-white/70 hover:text-[#DA90AE] transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-[#DA90AE]" />
-                  <span>WhatsApp</span>
                 </a>
               </li>
               <li>
